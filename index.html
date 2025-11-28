@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berke Kıdık Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="password-screen">
+        <div class="password-header">Parolayı Girin</div>
+        <div class="password-dots-container">
+            <div class="password-dot" id="dot1"></div>
+            <div class="password-dot" id="dot2"></div>
+            <div class="password-dot" id="dot3"></div>
+            <div class="password-dot" id="dot4"></div>
+            <div class="password-dot" id="dot5"></div>
+            <div class="password-dot" id="dot6"></div>
+        </div>
+        <div class="keypad-container">
+            <button class="keypad-button" data-key="1">1</button>
+            <button class="keypad-button" data-key="2">2<span class="sub-text">ABC</span></button>
+            <button class="keypad-button" data-key="3">3<span class="sub-text">DEF</span></button>
+            <button class="keypad-button" data-key="4">4<span class="sub-text">GHI</span></button>
+            <button class="keypad-button" data-key="5">5<span class="sub-text">JKL</span></button>
+            <button class="keypad-button" data-key="6">6<span class="sub-text">MNO</span></button>
+            <button class="keypad-button" data-key="7">7<span class="sub-text">PQRS</span></button>
+            <button class="keypad-button" data-key="8">8<span class="sub-text">TUV</span></button>
+            <button class="keypad-button" data-key="9">9<span class="sub-text">WXYZ</span></button>
+            <div class="empty-keypad-space"></div> 
+            <button class="keypad-button" data-key="0">0</button>
+            <button class="keypad-button delete-button" data-key="delete">Sil</button> 
+        </div>
+    </div>
+    <div class="dashboard-container">
+        <div class="left-panel">
+            <div class="university-info">
+                <img src="logo.png" alt="Logo" class="logo" id="header-logo"> 
+                <div>
+                    <h2 id="header-title">Sabancı Üniversitesi</h2>
+                    <p id="header-subtitle">Tuzla, İstanbul Dashboard</p>
+                </div>
+            </div>
+
+            <div class="time-date-widget">
+                <p class="local-time-label">YEREL SAAT</p>
+                <div class="time" id="current-time">16:29:10</div>
+                <div class="date" id="current-date">28 Kasım 2025 Cuma</div>
+            </div>
+
+            <div class="address-info">
+                <span class="icon location-pin">📍</span>
+                <p id="current-address">Orta Mahalle, Üniversite Cd.<br>No:27, 34956 Tuzla/İstanbul</p>
+            </div>
+
+            <div class="weather-widget">
+                <div class="header">
+                    CANLI HAVA
+                    <span id="toggle-location-btn">
+                        <span id="weather-location">Tuzla/İstanbul</span>
+                        <span class="toggle-icon">🔄</span>
+                    </span>
+                </div>
+                
+                <div class="weather-content">
+                    <span id="weather-visual" class="weather-visual"></span>
+                    <img src="" alt="Weather Icon" id="weather-icon" class="weather-icon"> 
+                    <div class="main-weather">
+                        <div class="temperature" id="weather-temp">19°C</div>
+                        <div class="condition" id="weather-condition">Çoğunlukla Bulutlu</div>
+                    </div>
+                </div>
+                
+                <div class="rain-chance">
+                    <span class="icon rain-umbrella">☔</span>
+                    <div class="rain-probability-chip">
+                        <span class="rain-label">Yağış İhtimali</span>
+                        <span class="rain-value" id="rain-probability">%10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="finance-header">
+                <h3><img src="artis.png" alt="Finans İkonu" class="header-finance-icon"> Finansal Piyasalar</h3>
+                <button class="refresh-button">🔄 Yenile</button>
+            </div>
+            
+            <div class="finance-grid">
+                <div class="finance-card">
+                    <div class="title">
+                        <img src="dolar.png" alt="Dolar İkonu" class="finance-icon"> Dolar / TL
+                    </div>
+                    <p class="subtitle">USD/TRY</p>
+                    <div class="value-row">
+                        <span class="value" id="usd-value">42.51</span>
+                        <span class="change positive" id="usd-change">**+%0.05**</span>
+                    </div>
+                </div>
+                
+                <div class="finance-card">
+                    <div class="title">
+                        <img src="euro.png" alt="Euro İkonu" class="finance-icon"> Euro / TL
+                    </div>
+                    <p class="subtitle">EUR/TRY</p>
+                    <div class="value-row">
+                        <span class="value" id="eur-value">49.18</span>
+                        <span class="change negative" id="eur-change">**-%0.31**</span>
+                    </div>
+                </div>
+                
+                <div class="finance-card">
+                    <div class="title">
+                        <img src="altin.png" alt="Altın İkonu" class="finance-icon"> Gram Altın
+                    </div>
+                    <p class="subtitle">GAU/TRY</p>
+                    <div class="value-row">
+                        <span class="value" id="gold-value">5,721</span>
+                        <span class="change positive" id="gold-change">**+%0.93**</span>
+                    </div>
+                </div>
+                
+                <div class="finance-card">
+                    <div class="title">
+                        <img src="bitcoin.png" alt="Bitcoin İkonu" class="finance-icon"> Bitcoin / TL
+                    </div>
+                    <p class="subtitle">BTC/TRY</p>
+                    <div class="finance-value-group">
+                        <span class="value" id="btc-value">3,918,980</span>
+                        <span class="value-tl">TL</span>
+                    </div>
+                    <div class="finance-change-group">
+                        <span class="change negative" id="btc-change">**-%0.29**</span>
+                        <span class="time-ago">Son 24s</span> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-info">
+                <p>Veriler Google Search ve piyasa kaynaklarından alınmıştır.</p>
+                <div class="daily-extrema">
+                    <div class="extrema-item">En Düşük (USD/Gün) <span id="usd-low">42.47</span> TL</div>
+                    <div class="extrema-item">En Yüksek (USD/Gün) <span id="usd-high">42.53</span> TL</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
