@@ -23,7 +23,7 @@ const LOCATIONS = {
         headerTitle: "Arcadia Apartmanı",
         headerSubtitle: "Berke Kıdık Dashboard",
         address: "Çukurova Mahallesi, Arcadia Apartmanı<br>Adana",
-        logoSrc: "ev.png" // Yeni Ev Logosu
+        logoSrc: "ev.png" // Ev Logosu
     }
 };
 const BASE_CURRENCY = "TRY";
@@ -133,24 +133,31 @@ function updateTime() {
     }
 }
 
-function getWeatherEmoji(mainCondition) {
-    const condition = mainCondition.toLowerCase();
-    switch (condition) {
-        case 'clear':
-            return '☀️'; 
-        case 'clouds':
-            return '☁️'; 
-        case 'rain':
-        case 'drizzle':
+// Gece/Gündüz Emojilerini Seçme
+function getWeatherEmoji(mainCondition, iconCode) {
+    const isNight = iconCode && iconCode.endsWith('n');
+    
+    switch (mainCondition) {
+        case 'Clear':
+            return isNight ? '🌙' : '☀️'; 
+        case 'Clouds':
+            return isNight ? '☁️' : '⛅️'; 
+        case 'Rain':
+        case 'Drizzle':
             return '🌧️'; 
-        case 'thunderstorm':
+        case 'Thunderstorm':
             return '⛈️'; 
-        case 'snow':
+        case 'Snow':
             return '❄️'; 
-        case 'mist':
-        case 'smoke':
-        case 'haze':
-        case 'fog':
+        case 'Mist':
+        case 'Smoke':
+        case 'Haze':
+        case 'Fog':
+        case 'Dust':
+        case 'Sand':
+        case 'Ash':
+        case 'Squall':
+        case 'Tornado':
             return '🌫️'; 
         default:
             return '🌤️'; 
@@ -171,8 +178,10 @@ async function fetchWeatherData(locationKey) {
         const data = await response.json();
         
         const mainCondition = data.weather[0].main;
-        const emoji = getWeatherEmoji(mainCondition);
+        const iconCode = data.weather[0].icon; 
+        const emoji = getWeatherEmoji(mainCondition, iconCode);
         
+        // EMOJİ YÜKLEME
         let weatherVisual = document.getElementById('weather-visual');
         if (!weatherVisual) {
             weatherVisual = document.createElement('span');
@@ -203,13 +212,13 @@ async function fetchWeatherData(locationKey) {
         document.getElementById('weather-condition').textContent = "Veri Yok";
         document.getElementById('weather-location').textContent = location.display + " (Hata)";
         let weatherVisual = document.getElementById('weather-visual');
-        if (weatherVisual) weatherVisual.textContent = '';
+        if (weatherVisual) weatherVisual.textContent = '❌'; // Hata emojisi
     }
 }
 
 async function fetchExchangeData() {
     try {
-        const exchangeUrl = `https://v6.exchangerate-api.com/v6/${EXCHANGE_API_KEY}/latest/${BASE_CURRENCY}`;
+        const exchangeUrl = `https://v6.exchangerate-api.com/v6/${EXCHANGE_KEY}/latest/${BASE_CURRENCY}`;
         const exchangeResponse = await fetch(exchangeUrl);
         
         if (!exchangeResponse.ok) throw new Error(`Döviz API hatası: ${exchangeResponse.statusText}`);
@@ -239,7 +248,7 @@ async function fetchExchangeData() {
 
 async function fetchCryptoData() {
     try {
-        const cryptoUrl = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=try&x_cg_demo_api_key=${COINGECKO_API_KEY}`;
+        const cryptoUrl = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=try&x_cg_demo_api_key=${COINGECKO_KEY}`;
         const cryptoResponse = await fetch(cryptoUrl);
         
         if (!cryptoResponse.ok) throw new Error(`Kripto API hatası: ${cryptoResponse.statusText}`);
@@ -297,7 +306,7 @@ function initializeDashboard() {
     dateElement = document.getElementById('current-date');
     headerTitleEl = document.getElementById('header-title');
     headerSubtitleEl = document.getElementById('header-subtitle');
-    headerLogoEl = document.getElementById('header-logo'); // Yeni logo elementi ataması
+    headerLogoEl = document.getElementById('header-logo');
 
     // Başlangıç değerlerini çek
     updateTime();
@@ -320,7 +329,6 @@ function initializeDashboard() {
         });
     }
     
-    // Alarmı kapatma butonu dinleyicisi
     const dismissButton = document.getElementById('alarm-dismiss');
     if (dismissButton) {
         dismissButton.addEventListener('click', () => {
